@@ -1,0 +1,67 @@
+import math
+from typing import Self
+import numpy as np
+import matplotlib.pyplot as plt
+
+"""
+We want to store all results in a table too, maybe use pandas or something
+"""
+##Using values for Sample 1 for simplicity, also using TEN PERCENT reduction for simplicity
+class RollingSolver:
+    def rolling_force_solver(pressure, area): 
+    
+        """"
+    All units in MM
+    Parameters required for rolling force calculations:
+        //friction_values = [0.05, 0.10, 0.15, 0.20]
+        //Pressure = von_mises_factor * mean_flow_stress * friction factor ## friction factor will be iterative
+        //von_mises_factor = 2/math.sqrt(3)
+    mean_flow_stress K * epsilon**n
+    friction_factor = 1/Q*(math.e**(Q-1))
+    Q = friction_values*L/ h_bar ** Define L and h_bar
+    Area = width * length
+    width_before = 
+    width_after = 
+    length = sqrt(roll_radius*delta_h)
+    roll_radius = 32.5
+
+        """ 
+    #Define constants
+        friction_values  = [0.05, 0.10, 0.15, 0.20]
+        von_mises_factor = 2/math.sqrt(3)
+    #Calculating mean flow stress, thickness also represents h 
+        T = 20
+        k = -0.5058*T + 210.4
+        n =-0.0004*T + 0.2185
+        change_in_thickness = [0.1654]
+        original_thickness = 1.654
+        epsilon = change_in_thickness / original_thickness
+        mean_flow_stress = k * epsilon**n
+    #Calculating friction factor (using average length and average height, also literally just took avg for sample 1, also using experimental measured values for h_after)
+        h_naught = 1.654    
+        h_after = 1.502 
+        h_bar  = (h_naught + h_after )/2  
+        length =  24.615 
+        Q = friction_values*length/h_bar
+        friction_factor = 1/Q*(math.e**(Q-1))
+    #Calculating area
+        width = 
+        area = width * length_new
+    #Calculating pressure
+        pressure = von_mises_factor * mean_flow_stress * friction_factor
+    #Calulate rolling force based on pressure and area
+        rolling_force = pressure * area
+        return rolling_force
+
+    
+
+    def rolling_torque_solver(pressure, area): 
+     #Calculating rolling torque and power
+
+     rolling_force = Self.rolling_force_solver(pressure, area)
+
+     rolling_torque = rolling_force * length/2
+     power = (2*math.pi*rolling_force*length* N) / 60000
+
+     return rolling_torque, power
+    
