@@ -46,6 +46,13 @@ def pressure(von_mises_factor, mean_flow_stress, friction_factor):
 def rolling_force(pressure, area):
     return pressure * area
 
+def rolling_torque(rolling_force, roll_radius):
+    return rolling_force * length/2 
+
+
+
+def power(rolling_force, length):
+    (2*math.pi*rolling_force*length*N)/60000
 # Set up the plot
 plt.figure(figsize=(10, 6))
 plt.title('Rolling Force vs. Friction Factor for Different Samples and Reductions')
@@ -70,6 +77,7 @@ for i, sample in enumerate(samples):
         # Store results for plotting
         ff_values = []
         force_values = []
+        torque_values = []
         
         for friction in friction_values:
             ff = friction_factor(friction, length, h_bar)
@@ -82,6 +90,9 @@ for i, sample in enumerate(samples):
         # Plot for this reduction
         reduction_percent = (reduction/sample['h_naught'])*100
         plt.plot(ff_values, force_values, 'o-', color=colors[i], 
+                label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
+        
+        plt.plot(ff_values, torque_values, 'o-', color=colors[i], 
                 label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
    
                 
