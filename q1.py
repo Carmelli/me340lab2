@@ -12,10 +12,6 @@ def rolling_force_solver():
     roll_radius = 32.5
 
     #Calculating mean flow stress, thickness also represents h 
-    def mean_flow_stress(K, n, epsilon_final):
-         integral, 
-    
-    def mean
     T = 20
     k = -0.5058*T + 210.4
     n =-0.0004*T + 0.2185
