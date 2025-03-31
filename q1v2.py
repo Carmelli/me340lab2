@@ -12,6 +12,9 @@ k = -0.5058*T + 210.4
 n =-0.0004*T + 0.2185
 colors = ['red', 'blue', 'green']
 
+#Resetting global variables
+plt.style.use('default')
+
 # Sample data (3 samples)
 samples = [
     {'h_naught': 1.654, 'h_after': 1.502, 'width': 24.615, 'reductions': [0.1654], 'label': 'Sample 1'},
