@@ -50,8 +50,6 @@ plt.xlabel('Friction Factor')
 plt.ylabel('Rolling Force (N)')
 plt.grid(True)
 
-# Create a colormap for different reduction values
-colors = plt.cm.rainbow(np.linspace(0, 1, len(samples[0]['reductions'])))
 
 # Main calculation and plotting loop
 for sample in samples:
