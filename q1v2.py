@@ -50,7 +50,11 @@ plt.xlabel('Friction Factor')
 plt.ylabel('Rolling Force (N)')
 plt.grid(True)
 
+# Automatically generate distinct colors
+num_lines = sum(len(sample['reductions']) for sample in samples)  # Total lines
+colors = plt.cm.tab10(np.linspace(0, 1, num_lines))  # 10 distinct colors (or use 'viridis')
 
+color_idx = 0
 # Main calculation and plotting loop
 for sample in samples:
     # Calculate geometry values for this sample
@@ -74,7 +78,7 @@ for sample in samples:
         
         # Plot for this reduction
         reduction_percent = (reduction/sample['h_naught'])*100
-        plt.plot(ff_values, force_values, 'o-', color=color, 
+        plt.plot(ff_values, force_values, 'o-', color=colors[color_idx], 
                 label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
    
                 
