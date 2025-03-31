@@ -10,6 +10,7 @@ roll_radius = 32.5
 T = 20
 k = -0.5058*T + 210.4
 n =-0.0004*T + 0.2185
+colors = ['red', 'blue', 'green']
 
 # Sample data (3 samples)
 samples = [
@@ -75,8 +76,13 @@ for sample in samples:
         
         # Plot for this reduction
         reduction_percent = (reduction/sample['h_naught'])*100
-        plt.plot(ff_values, force_values, 'o-', color=color,
+        plt.plot(ff_values, force_values, 'o-', color=color, 
                 label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
+   
+                
+        results = force_values, ff_values
+        print("Rolling Forces: ", results)
+    
 
 # Add legend and show plot
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
