@@ -8,18 +8,24 @@ def rolling_force_solver():
     
     #Define constants
     friction_values  = [0.05, 0.10, 0.15, 0.20]
+    change_in_thickness = 0.1654 
+    original_thickness = 1.654 
+    epsilon_final = change_in_thickness / original_thickness
     von_mises_factor = 2/math.sqrt(3)
     roll_radius = 32.5
+    
 
     #Calculating mean flow stress, thickness also represents h 
     T = 20
     k = -0.5058*T + 210.4
     n =-0.0004*T + 0.2185
-    change_in_thickness = 0.1654 
-    original_thickness = 1.654 
-    epsilon = change_in_thickness / original_thickness
-    mean_flow_stress = k * epsilon**n
 
+    
+    #Calculating mean flow stress
+    integral, _ = quad(lambda x: k * x**n, 0, epsilon_final)
+    mean_flow_stress = integral / epsilon_final
+        
+    
     #Calculating friction factor (using average length and average height, also literally just took avg for sample 1, also using experimental measured values for h_after)
     h_naught = 1.654   
     h_after = 1.502 
@@ -34,7 +40,7 @@ def rolling_force_solver():
     #Loop through friction, calculating rolling force for each one
     for friction_value in friction_values:
         Q = (friction_value*length)/h_bar 
-        friction_factor = 1/Q*(math.e**(Q-1))
+        friction_factor = 1/Q*(math.e**(Q)-1)
 
         #Calculating pressure
         pressure = von_mises_factor * mean_flow_stress * friction_factor
