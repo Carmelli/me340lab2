@@ -46,7 +46,7 @@ def pressure(von_mises_factor, mean_flow_stress, friction_factor):
 def rolling_force(pressure, area):
     return pressure * area
 
-def rolling_torque(rolling_force):
+def rolling_torque(rolling_force, length):
     return rolling_force * length/2 
 
 
@@ -71,6 +71,7 @@ for i, sample in enumerate(samples):
     for reduction, color in zip(sample['reductions'], colors):
         epsilon_final = reduction / sample['h_naught']
         mfs = mean_flow_stress(k, n, epsilon_final)
+
         
         # Store results for plotting
         ff_values = []
@@ -81,17 +82,16 @@ for i, sample in enumerate(samples):
             ff = friction_factor(friction, length, h_bar)
             p = pressure(von_mises_factor, mfs, ff)
             force = rolling_force(p, area)
-            
+            torque = rolling_torque(force, length)
+
             ff_values.append(ff)
             force_values.append(force)
+            torque_values.append(torque)
             
-        for friction in torque_values:
-            rt = rolling_torque(rolling_force)
-        
-            torque_values.append(rt)
-        
+       
         # Plot for this reduction
         reduction_percent = (reduction/sample['h_naught'])*100
+
         plt.plot(ff_values, force_values, 'o-', color=colors[i], 
                 label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
         
@@ -99,11 +99,8 @@ for i, sample in enumerate(samples):
                 label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
    
                 
-        force_results = force_values
-        torque_results = torque_values
-        print("Rolling Forces: ", force_results)
-        print("Rolling Torque: ", torque_results)
-    
+        print(f"Sample {i+1} - Rolling Forces: {force_values}")
+        print(f"Sample {i+1} - Rolling Torque: {torque_values}")
 
 # Add legend and show plot
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
@@ -111,6 +108,4 @@ plt.tight_layout()
 plt.show()
 
 
-results = force_values, ff_values
-print("Rolling Forces: ", results)
     
