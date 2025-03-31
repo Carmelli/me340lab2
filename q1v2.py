@@ -82,4 +82,8 @@ for sample in samples:
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
 plt.show()
+
+
+results = force_values
+print("Rolling Forces: ", results)
     
