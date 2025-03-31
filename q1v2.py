@@ -84,6 +84,6 @@ plt.tight_layout()
 plt.show()
 
 
-results = force_values
+results = force_values, ff_values
 print("Rolling Forces: ", results)
     
