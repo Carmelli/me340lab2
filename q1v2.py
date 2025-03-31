@@ -95,8 +95,10 @@ for i, sample in enumerate(samples):
         plt.plot(ff_values, force_values, 'o-', color=colors[i], 
                 label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
         
+        """
         plt.plot(ff_values, torque_values, 'o-', color=colors[i], 
-                label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
+                label=f"{sample['label']}, {reduction_percent:.1f}% reduction")"
+                """
    
                 
         print(f"Sample {i+1} - Rolling Forces: {force_values}")
