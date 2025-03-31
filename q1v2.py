@@ -13,9 +13,9 @@ n =-0.0004*T + 0.2185
 
 # Sample data (3 samples)
 samples = [
-    {'h_naught': 1.654, 'h_after': 1.502, 'width': 24.615, 'reductions': [0.1654, 0.2481, 0.3308], 'label': 'Sample 1'},
-    {'h_naught': 1.598, 'h_after': 1.314, 'width': 24.408, 'reductions': [0.1598, 0.2397, 0.3196], 'label': 'Sample 2'},
-    {'h_naught': 1.314, 'h_after': 1.280, 'width': 25.057, 'reductions': [0.1724, 0.2516, 0.3308], 'label': 'Sample 3'}
+    {'h_naught': 1.654, 'h_after': 1.502, 'width': 24.615, 'reductions': [0.1654], 'label': 'Sample 1'},
+    {'h_naught': 1.598, 'h_after': 1.314, 'width': 24.408, 'reductions': [0.2397], 'label': 'Sample 2'},
+    {'h_naught': 1.314, 'h_after': 1.280, 'width': 25.057, 'reductions': [0.3308], 'label': 'Sample 3'}
 ]
 
 #Different friction values
