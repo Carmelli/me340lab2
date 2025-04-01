@@ -6,7 +6,7 @@ from scipy.integrate import quad
  
 #Define constants
 von_mises_factor = 2/math.sqrt(3)
-roll_radius = 32.5 / 1000
+roll_radius = 32.5 
 T = 20
 k = -0.5058*T + 210.4
 n =-0.0004*T + 0.2185
