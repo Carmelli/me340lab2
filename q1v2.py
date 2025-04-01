@@ -51,7 +51,7 @@ def rolling_torque(rolling_force, length):
 
 
 
-# Set up the plot
+# Set up the plot 1
 plt.figure(figsize=(10, 6))
 plt.title('Rolling Force vs. Friction Factor for Different Samples and Reductions')
 plt.xlabel('Friction Factor')
@@ -101,7 +101,7 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
 plt.show()
 
-# Set up the plot
+# Set up the plot 2
 plt.figure(figsize=(10, 6))
 plt.title('Rolling Torque vs. Friction Factor for Different Samples and Reductions')
 plt.xlabel('Friction Factor')
@@ -125,12 +125,15 @@ for i, sample in enumerate(samples):
         
         # Store results for plotting
         ff_values = []
-        force_values = []
         torque_values = []
         
         for friction in torque_values:
+            ff = friction_factor(friction, length, h_bar)
+            p = pressure(von_mises_factor, mfs, ff)
+            force = rolling_force(p, area)
             torque = rolling_torque(force, length)
 
+            ff_values.append(ff)
             torque_values.append(torque)
             
        
@@ -149,4 +152,5 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
 plt.show()
 
-    
+
+
