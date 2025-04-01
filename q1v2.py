@@ -76,17 +76,15 @@ for i, sample in enumerate(samples):
         # Store results for plotting
         ff_values = []
         force_values = []
-        torque_values = []
+        
         
         for friction in friction_values:
             ff = friction_factor(friction, length, h_bar)
             p = pressure(von_mises_factor, mfs, ff)
             force = rolling_force(p, area)
-            torque = rolling_torque(force, length)
 
             ff_values.append(ff)
             force_values.append(force)
-            torque_values.append(torque)
             
        
         # Plot for this reduction
@@ -94,15 +92,9 @@ for i, sample in enumerate(samples):
 
         plt.plot(ff_values, force_values, 'o-', color=colors[i], 
                 label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
-        
-        
-        plt.plot(ff_values, torque_values, 'o-', color=colors[i], 
-                label=f"{sample['label']}, {reduction_percent:.1f}% reduction")"
-                
-   
-                
+                              
         print(f"Sample {i+1} - Rolling Forces: {force_values}")
-        print(f"Sample {i+1} - Rolling Torque: {torque_values}")
+
 
 # Add legend and show plot
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
