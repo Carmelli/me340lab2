@@ -1,3 +1,4 @@
+#Group 2 Data where RPM varies, Reduction is Constant at 15%
 import math
 import numpy as np
 import matplotlib.pyplot as plt
@@ -17,10 +18,11 @@ plt.style.use('default')
 
 # Sample data (3 samples)
 samples = [
-    {'h_naught': 1.654, 'h_after': 1.502, 'width': 24.615, 'reductions': [0.1654], 'label': 'Sample 1'},
-    {'h_naught': 1.598, 'h_after': 1.314, 'width': 24.408, 'reductions': [0.2397], 'label': 'Sample 2'},
-    {'h_naught': 1.584, 'h_after': 1.280, 'width': 25.057, 'reductions': [0.3168], 'label': 'Sample 3'}
+    {'h_naught': 1.590, 'h_after': 1.330, 'width': 24.680, 'reductions': [0.135], 'label': 'Sample 1'},
+    {'h_naught': 1.580, 'h_after': 1.320, 'width': 23.760, 'reductions': [0.134], 'label': 'Sample 2'},
+    {'h_naught': 1.584, 'h_after': 1.280, 'width': 25.057, 'reductions': [0.137], 'label': 'Sample 3'}
 ]
+
 
 #Different friction values
 friction_values = [0.05, 0.10, 0.15, 0.20]
@@ -86,6 +88,8 @@ for i, sample in enumerate(samples):
             force = rolling_force(p, area)
             torque = rolling_torque(force, length, sample['h_naught']/1000, sample['h_after']/1000)
 
+            #Conversion to get values in Nm instead of Nmm
+
             ff_values.append(ff)
             force_values.append(force)
             torque_values.append(torque)
@@ -110,7 +114,6 @@ for i, sample in enumerate(samples):
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
 plt.show()
-
 
 
 
