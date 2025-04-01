@@ -84,7 +84,7 @@ for i, sample in enumerate(samples):
             ff = friction_factor(friction, length, h_bar)
             p = pressure(von_mises_factor, mfs, ff)
             force = rolling_force(p, area)
-            torque = rolling_torque(force, length, sample['h_naught'], sample['h_after'])
+            torque = rolling_torque(force, length, sample['h_naught'/1000], sample['h_after'/1000])
 
             ff_values.append(ff)
             force_values.append(force)
