@@ -95,10 +95,10 @@ for i, sample in enumerate(samples):
         plt.plot(ff_values, force_values, 'o-', color=colors[i], 
                 label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
         
-        """
+        
         plt.plot(ff_values, torque_values, 'o-', color=colors[i], 
                 label=f"{sample['label']}, {reduction_percent:.1f}% reduction")"
-                """
+                
    
                 
         print(f"Sample {i+1} - Rolling Forces: {force_values}")
@@ -109,5 +109,52 @@ plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
 plt.show()
 
+# Set up the plot
+plt.figure(figsize=(10, 6))
+plt.title('Rolling Torque vs. Friction Factor for Different Samples and Reductions')
+plt.xlabel('Friction Factor')
+plt.ylabel('Rolling Torque (N/m)')
+plt.grid(True)
+
+# Automatically generate distinct colors
+num_lines = sum(len(sample['reductions']) for sample in samples)  # Total lines
+colors = plt.cm.tab10(np.linspace(0, 1, num_lines))  # 10 distinct colors (or use 'viridis')
+
+color_idx = 0
+# Main calculation and plotting loop
+for i, sample in enumerate(samples):
+    # Calculate geometry values for this sample
+    length, area, h_bar = geometry_values(sample['h_naught'], sample['h_after'], sample['width'])
+    
+    for reduction, color in zip(sample['reductions'], colors):
+        epsilon_final = reduction / sample['h_naught']
+        mfs = mean_flow_stress(k, n, epsilon_final)
+
+        
+        # Store results for plotting
+        ff_values = []
+        force_values = []
+        torque_values = []
+        
+        for friction in torque_values:
+            torque = rolling_torque(force, length)
+
+            torque_values.append(torque)
+            
+       
+        # Plot for this reduction
+        reduction_percent = (reduction/sample['h_naught'])*100
+
+        
+        plt.plot(ff_values, torque_values, 'o-', color=colors[i], 
+                label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
+                
+   
+        print(f"Sample {i+1} - Rolling Torque: {torque_values}")
+
+# Add legend and show plot
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
+plt.show()
 
     
