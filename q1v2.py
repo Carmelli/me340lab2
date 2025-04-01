@@ -46,8 +46,10 @@ def pressure(von_mises_factor, mean_flow_stress, friction_factor):
 def rolling_force(pressure, area):
     return pressure * area
 
-def rolling_torque(rolling_force, length):
-    return rolling_force * length/2 
+def rolling_torque(rolling_force, length, h_naught, h_after):
+    h_bar = (h_naught + h_after) / 2  
+    length = math.sqrt(roll_radius * (h_naught - h_after)) 
+    return rolling_force * (length/2) 
 
 
 
@@ -76,81 +78,40 @@ for i, sample in enumerate(samples):
         # Store results for plotting
         ff_values = []
         force_values = []
-        
-        
-        for friction in friction_values:
-            ff = friction_factor(friction, length, h_bar)
-            p = pressure(von_mises_factor, mfs, ff)
-            force = rolling_force(p, area)
-
-            ff_values.append(ff)
-            force_values.append(force)
-            
-       
-        # Plot for this reduction
-        reduction_percent = (reduction/sample['h_naught'])*100
-
-        plt.plot(ff_values, force_values, 'o-', color=colors[i], 
-                label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
-                              
-        print(f"Sample {i+1} - Rolling Forces: {force_values}")
-
-
-# Add legend and show plot
-plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-plt.tight_layout()
-plt.show()
-
-# Set up the plot 2
-plt.figure(figsize=(10, 6))
-plt.title('Rolling Torque vs. Friction Factor for Different Samples and Reductions')
-plt.xlabel('Friction Factor')
-plt.ylabel('Rolling Torque (N/m)')
-plt.grid(True)
-
-# Automatically generate distinct colors
-num_lines = sum(len(sample['reductions']) for sample in samples)  # Total lines
-colors = plt.cm.tab10(np.linspace(0, 1, num_lines))  # 10 distinct colors (or use 'viridis')
-
-color_idx = 0
-# Main calculation and plotting loop
-for i, sample in enumerate(samples):
-    # Calculate geometry values for this sample
-    length, area, h_bar = geometry_values(sample['h_naught'], sample['h_after'], sample['width'])
-    
-    for reduction, color in zip(sample['reductions'], colors):
-        epsilon_final = reduction / sample['h_naught']
-        mfs = mean_flow_stress(k, n, epsilon_final)
-
-        
-        # Store results for plotting
-        ff_values = []
         torque_values = []
         
-        for friction in torque_values:
+        for friction in friction_values:
             ff = friction_factor(friction, length, h_bar)
             p = pressure(von_mises_factor, mfs, ff)
             force = rolling_force(p, area)
             torque = rolling_torque(force, length)
 
             ff_values.append(ff)
+            force_values.append(force)
             torque_values.append(torque)
             
        
         # Plot for this reduction
         reduction_percent = (reduction/sample['h_naught'])*100
 
+        # Plot force (left axis)
+        plt.plot(ff_values, force_values, 'o-', color=colors[i], 
+                label=f"{sample['label']} (Force), {reduction_percent:.1f}%")
         
-        plt.plot(ff_values, torque_values, 'o-', color=colors[i], 
-                label=f"{sample['label']}, {reduction_percent:.1f}% reduction")
-                
-   
+        # Plot torque (right axis)
+        plt.plot(ff_values, torque_values, 's--', color=colors[i], 
+                label=f"{sample['label']} (Torque), {reduction_percent:.1f}%")
+                              
+        print(f"Sample {i+1} - Rolling Forces: {force_values}")
         print(f"Sample {i+1} - Rolling Torque: {torque_values}")
+
 
 # Add legend and show plot
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
 plt.show()
+
+
 
 
 
