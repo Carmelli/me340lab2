@@ -69,7 +69,7 @@ color_idx = 0
 # Main calculation and plotting loop
 for i, sample in enumerate(samples):
     # Calculate geometry values for this sample
-    length, area, h_bar = geometry_values(sample['h_naught'], sample['h_after'], sample['width'])
+    length, area, h_bar = geometry_values(sample['h_naught']/1000, sample['h_after']/1000, sample['width']/1000)
     
     for reduction, color in zip(sample['reductions'], colors):
         epsilon_final = reduction / sample['h_naught']
@@ -85,7 +85,7 @@ for i, sample in enumerate(samples):
             ff = friction_factor(friction, length, h_bar)
             p = pressure(von_mises_factor, mfs, ff)
             force = rolling_force(p, area)
-            torque = rolling_torque(force, length, sample['h_naught']/1000, sample['h_after']/1000)
+            torque = rolling_torque(force, length, sample['h_naught'], sample['h_after'])
 
             #Conversion to get values in Nm instead of Nmm
 
